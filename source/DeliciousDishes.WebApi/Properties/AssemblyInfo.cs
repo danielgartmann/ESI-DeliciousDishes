@@ -7,9 +7,8 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("DeliciousDishes.WebApi")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Zuehlke Technology Group")]
-[assembly: AssemblyProduct("DeliciousDishes.WebApi")]
+[assembly: AssemblyProduct("DeliciousDishes")]
 [assembly: AssemblyCopyright("Copyright © Zuehlke Technology Group 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -21,6 +20,12 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("9dae6413-c0db-4106-b7bb-7f25a7842ce5")]
+
+#if DEBUG
+[assembly: AssemblyConfiguration("Debug")]
+#else
+[assembly: AssemblyConfiguration("Release")]
+#endif
 
 // Version information for an assembly consists of the following four values:
 //
