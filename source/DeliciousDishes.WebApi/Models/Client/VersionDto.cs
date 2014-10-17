@@ -1,4 +1,4 @@
-namespace DeliciousDishes.WebApi.Models
+namespace DeliciousDishes.WebApi.Models.Client
 {
     public class VersionDto
     {

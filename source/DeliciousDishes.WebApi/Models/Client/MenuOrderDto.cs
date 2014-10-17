@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DeliciousDishes.WebApi.Models
+namespace DeliciousDishes.WebApi.Models.Client
 {
     public class MenuOrderDto
     {

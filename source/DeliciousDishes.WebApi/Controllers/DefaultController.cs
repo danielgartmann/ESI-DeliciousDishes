@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web.Http;
 using DeliciousDishes.WebApi.Models;
+using DeliciousDishes.WebApi.Models.Client;
 
 namespace DeliciousDishes.WebApi.Controllers
 {

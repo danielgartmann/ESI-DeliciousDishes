@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Http;
-using DeliciousDishes.WebApi.Models;
+using DeliciousDishes.WebApi.Models.Client;
 
-namespace DeliciousDishes.WebApi.Controllers
+namespace DeliciousDishes.WebApi.Controllers.Client
 {
     public class OrderController : ApiController
     {
@@ -15,7 +15,7 @@ namespace DeliciousDishes.WebApi.Controllers
             var aInsertedId = new Random(DateTime.UtcNow.Millisecond).Next(0, 1000);
             theInsertedOrder.MenuOrderId = aInsertedId;
 
-            return Created("/order/" + aInsertedId, theInsertedOrder);
+            return this.Created("/order/" + aInsertedId, theInsertedOrder);
         }
 
         [Route("client/order/{menuOrderId}")]

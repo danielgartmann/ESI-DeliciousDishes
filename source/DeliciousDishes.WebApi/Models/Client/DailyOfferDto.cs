@@ -1,4 +1,4 @@
-﻿namespace DeliciousDishes.WebApi.Models
+﻿namespace DeliciousDishes.WebApi.Models.Client
 {
     /// <summary>
     /// This is a dto only used by the ordering client b'cause it increases complexity & makes general no sense to share dtos 

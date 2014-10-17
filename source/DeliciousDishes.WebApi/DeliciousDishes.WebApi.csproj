@@ -80,14 +80,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\DailyOfferController.cs" />
-    <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\Client\DailyOfferController.cs" />
+    <Compile Include="Controllers\Client\FeedbackController.cs" />
+    <Compile Include="Infrastructure\ApiError.cs" />
+    <Compile Include="Infrastructure\ApiErrorHttpResponseMessage.cs" />
+    <Compile Include="Filter\EnsureContentFilter.cs" />
+    <Compile Include="Infrastructure\FieldApiError.cs" />
+    <Compile Include="Infrastructure\GeneralApiError.cs" />
+    <Compile Include="Infrastructure\IOrderedFilter.cs" />
+    <Compile Include="Infrastructure\OrderedFilterProvider.cs" />
+    <Compile Include="Filter\ValidateHeaderFilter.cs" />
+    <Compile Include="Filter\ValidateModelFilter.cs" />
+    <Compile Include="Models\Client\FeedbackDto.cs" />
+    <Compile Include="Models\Client\DailyOfferDto.cs" />
+    <Compile Include="Controllers\Client\OrderController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\MenuOrderDto.cs" />
-    <Compile Include="Models\VersionDto.cs" />
+    <Compile Include="Models\Client\MenuOrderDto.cs" />
+    <Compile Include="Models\Client\VersionDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
