@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Reflection;
 using System.Web.Http;
+using DeliciousDishes.WebApi.Models;
 
 namespace DeliciousDishes.WebApi.Controllers
 {
@@ -34,13 +31,5 @@ namespace DeliciousDishes.WebApi.Controllers
                 Configuration = configuration
             });
         }
-    }
-
-    public class VersionDto
-    {
-        public string ProductVersion { get; set; }
-        public string BuildDateTime { get; set; }
-        public string Build { get; set; }
-        public string Configuration { get; set; }
     }
 }
