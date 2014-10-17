@@ -1,0 +1,4 @@
+source/packages/
+source/DeliciousDishes.WebApi/obj/
+*.user
+**/bin/
