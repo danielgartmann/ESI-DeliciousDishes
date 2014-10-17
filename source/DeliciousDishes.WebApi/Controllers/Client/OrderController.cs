@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Http;
+using DeliciousDishes.WebApi.Filter;
 using DeliciousDishes.WebApi.Models.Client;
 
 namespace DeliciousDishes.WebApi.Controllers.Client
@@ -9,7 +10,9 @@ namespace DeliciousDishes.WebApi.Controllers.Client
     {
         [Route("client/order")]
         [HttpPost]
-        public IHttpActionResult NewOrder(MenuOrderDto order)
+        [EnsureContentFilter]
+        [ValidateModelFilter]
+        public IHttpActionResult NewOrder([FromBody] MenuOrderDto order)
         {
             var theInsertedOrder = order;
             var aInsertedId = new Random(DateTime.UtcNow.Millisecond).Next(0, 1000);
@@ -35,7 +38,9 @@ namespace DeliciousDishes.WebApi.Controllers.Client
 
         [Route("client/order")]
         [HttpPut]
-        public IHttpActionResult UpdateOrder(MenuOrderDto order)
+        [EnsureContentFilter]
+        [ValidateModelFilter]
+        public IHttpActionResult UpdateOrder([FromBody] MenuOrderDto order)
         {
             return this.Ok(order);
         }

@@ -1,7 +1,10 @@
 ﻿using System;
+using DeliciousDishes.WebApi.Models.Client.Validation;
+using FluentValidation.Attributes;
 
 namespace DeliciousDishes.WebApi.Models.Client
 {
+    [Validator(typeof(MenuOrderValidator))]
     public class MenuOrderDto
     {
         public long MenuOrderId { get; set; }

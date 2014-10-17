@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Http.Filters;
 using DeliciousDishes.WebApi.Infrastructure;
+using FluentValidation.WebApi;
 
 namespace DeliciousDishes.WebApi
 {
@@ -23,6 +21,9 @@ namespace DeliciousDishes.WebApi
 
             // Custom action filter provider which does ordering
             config.Services.Add(typeof(IFilterProvider), new OrderedFilterProvider());
+
+            // configure FluentValidation model validator provider
+            FluentValidationModelValidatorProvider.Configure(GlobalConfiguration.Configuration);
         }
     }
 }
