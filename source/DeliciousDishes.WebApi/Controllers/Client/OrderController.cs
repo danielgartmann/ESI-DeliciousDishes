@@ -10,7 +10,7 @@ namespace DeliciousDishes.WebApi.Controllers.Client
     {
         [Route("client/order")]
         [HttpPost]
-        [EnsureContentFilter]
+        [EnsureHasContentFilter]
         [ValidateModelFilter]
         public IHttpActionResult NewOrder([FromBody] MenuOrderDto order)
         {
@@ -38,7 +38,7 @@ namespace DeliciousDishes.WebApi.Controllers.Client
 
         [Route("client/order")]
         [HttpPut]
-        [EnsureContentFilter]
+        [EnsureHasContentFilter]
         [ValidateModelFilter]
         public IHttpActionResult UpdateOrder([FromBody] MenuOrderDto order)
         {

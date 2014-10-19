@@ -8,7 +8,7 @@ namespace DeliciousDishes.WebApi.Controllers.Client
     {
         [HttpPost]
         [Route("client/feedback")]
-        [EnsureContentFilter]
+        [EnsureHasContentFilter]
         [ValidateModelFilter]
         public IHttpActionResult AddFeedback([FromBody] FeedbackDto feedback)
         {

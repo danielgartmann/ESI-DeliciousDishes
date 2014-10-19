@@ -8,7 +8,7 @@ namespace DeliciousDishes.WebApi.Controllers.Admin
     {
         [HttpPost]
         [Route("admin/dailyOffer")]
-        [EnsureContentFilter]
+        [EnsureHasContentFilter]
         public IHttpActionResult AddDailyOffer([FromBody] DailyOfferDto dailyOffer)
         {
             return Created("admin/dailyOffer/1", dailyOffer);

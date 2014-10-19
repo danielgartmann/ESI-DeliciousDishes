@@ -5,12 +5,12 @@ using DeliciousDishes.WebApi.Infrastructure;
 
 namespace DeliciousDishes.WebApi.Filter
 {
-    public class EnsureContentFilter : ActionFilterAttribute, IOrderedFilter
+    public class EnsureHasContentFilter : ActionFilterAttribute, IOrderedFilter
     {
         private const string ContentMissingCode = "ContentMissing";
         private const string ContentMissingMessage = "Missing content";
 
-        public EnsureContentFilter()
+        public EnsureHasContentFilter()
         {
             this.Order = 20;
         }
