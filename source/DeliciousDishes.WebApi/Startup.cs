@@ -2,14 +2,19 @@
 using System.Web.Http.Filters;
 using DeliciousDishes.WebApi.Infrastructure;
 using FluentValidation.WebApi;
+using Microsoft.Owin;
+using Owin;
+
+[assembly: OwinStartup(typeof(DeliciousDishes.WebApi.Startup))]
 
 namespace DeliciousDishes.WebApi
 {
-    public static class WebApiConfig
+    public class Startup
     {
-        public static void Register(HttpConfiguration config)
+        public void Configuration(IAppBuilder app)
         {
             // Web API configuration and services
+            var config = new HttpConfiguration();
 
             // Web API routes
             config.MapHttpAttributeRoutes();
@@ -24,6 +29,8 @@ namespace DeliciousDishes.WebApi
 
             // configure FluentValidation model validator provider
             FluentValidationModelValidatorProvider.Configure(GlobalConfiguration.Configuration);
+
+            app.UseWebApi(config); 
         }
     }
 }
