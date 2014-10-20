@@ -8,6 +8,8 @@ using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Web.Http;
+using DeliciousDishes.DataAccess.Context;
+using DeliciousDishes.DataAccess.Entities;
 using DeliciousDishes.WebApi.Models.Client;
 using Microsoft.Owin.Hosting;
 using Newtonsoft.Json;
@@ -37,6 +39,33 @@ namespace DeliciousDishes.WebApi.Test
 
             this.httpClient = new HttpClient();
         }
+
+        [SetUp]
+        public void BeforeTest()
+        {
+            using (var context = new DeliciousDishesDbContext())
+            {
+                context.MenuOrders.RemoveRange(context.MenuOrders);
+                context.DailyOffers.RemoveRange(context.DailyOffers);
+                context.Menus.RemoveRange(context.Menus);
+
+                var menu1 = new Menu { Description = "Best Pasta Ever", Price = 12.5, Title = "Pasta" };
+                context.Menus.Add(menu1);
+                context.DailyOffers.Add(new DailyOffer { Date = DateTime.Today, Menu = menu1, Stock = 12});
+                context.SaveChanges();
+            }
+        }
+
+        [TearDown]
+        public void AfterTest()
+        {
+            using (var context = new DeliciousDishesDbContext())
+            {
+                context.MenuOrders.RemoveRange(context.MenuOrders);
+                context.DailyOffers.RemoveRange(context.DailyOffers);
+                context.Menus.RemoveRange(context.Menus);
+            }
+        } 
 
         [TestCase]
         public void SendAndOrder_WithAllFilledOut_ShouldReturnOk()
