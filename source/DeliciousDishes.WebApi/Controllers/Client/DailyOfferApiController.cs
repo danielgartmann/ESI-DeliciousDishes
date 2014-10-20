@@ -5,7 +5,7 @@ using DeliciousDishes.WebApi.Models.Client;
 
 namespace DeliciousDishes.WebApi.Controllers.Client
 {
-    public class DailyOfferController : ApiController
+    public class DailyOfferApiController : ApiController
     {
         [HttpGet]
         [Route("client/dailyOffer")]

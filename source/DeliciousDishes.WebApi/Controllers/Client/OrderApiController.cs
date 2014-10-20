@@ -6,7 +6,7 @@ using DeliciousDishes.WebApi.Models.Client;
 
 namespace DeliciousDishes.WebApi.Controllers.Client
 {
-    public class OrderController : ApiController
+    public class OrderApiController : ApiController
     {
         [Route("client/order")]
         [HttpPost]

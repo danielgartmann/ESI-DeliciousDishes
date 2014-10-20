@@ -4,7 +4,7 @@ using DeliciousDishes.WebApi.Models.Client;
 
 namespace DeliciousDishes.WebApi.Controllers.Client
 {
-    public class FeedbackController : ApiController
+    public class FeedbackApiController : ApiController
     {
         [HttpPost]
         [Route("client/feedback")]

@@ -98,8 +98,8 @@
   <ItemGroup>
     <Compile Include="Controllers\Admin\DailyOfferController.cs" />
     <Compile Include="Models\Admin\DailyOfferDto.cs" />
-    <Compile Include="Controllers\Client\DailyOfferController.cs" />
-    <Compile Include="Controllers\Client\FeedbackController.cs" />
+    <Compile Include="Controllers\Client\DailyOfferApiController.cs" />
+    <Compile Include="Controllers\Client\FeedbackApiController.cs" />
     <Compile Include="Infrastructure\ApiError.cs" />
     <Compile Include="Infrastructure\ApiErrorHttpResponseMessage.cs" />
     <Compile Include="Filter\EnsureHasContentFilter.cs" />
@@ -112,7 +112,7 @@
     <Compile Include="Models\Admin\OfferDto.cs" />
     <Compile Include="Models\Client\FeedbackDto.cs" />
     <Compile Include="Models\Client\DailyOfferDto.cs" />
-    <Compile Include="Controllers\Client\OrderController.cs" />
+    <Compile Include="Controllers\Client\OrderApiController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Models\Client\MenuOrderDto.cs" />
     <Compile Include="Models\Client\Validation\FeedbackValidator.cs" />
