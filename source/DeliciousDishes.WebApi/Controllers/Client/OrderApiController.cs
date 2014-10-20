@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Http;
 using DeliciousDishes.DataAccess.Context;
 using DeliciousDishes.DataAccess.Entities;
+using DeliciousDishes.DataAccess.Services;
 using DeliciousDishes.WebApi.Filter;
 using DeliciousDishes.WebApi.Models.Client;
 
@@ -11,60 +12,40 @@ namespace DeliciousDishes.WebApi.Controllers.Client
 {
     public class OrderApiController : ApiController
     {
+        private readonly OrderServices orderServices = new OrderServices();
+
         [Route("client/order")]
         [HttpPost]
         [EnsureHasContentFilter]
         [ValidateModelFilter]
         public IHttpActionResult NewOrder([FromBody] MenuOrderDto order)
         {
-            try
+            var menuOrder = new MenuOrder
             {
-                using (var context = new DeliciousDishesDbContext())
-                {
-                    var menuOrder = new MenuOrder
-                    {
-                        OrderUser = order.OrderUserId,
-                        DailyOfferId = order.DailyOfferId,
-                        RecipientUser = order.RecipientUserId,
-                        Remarks = order.Remarks
-                    };
-                    context.MenuOrders.Add(menuOrder);
-                    context.SaveChanges();
+                OrderUser = order.OrderUserId,
+                DailyOfferId = order.DailyOfferId,
+                RecipientUser = order.RecipientUserId,
+                Remarks = order.Remarks
+            };
+            orderServices.CreateOrder(menuOrder);
 
-                    return this.Created("/order/" + menuOrder.Id, order);
-                }
-            }
-            catch (Exception)
-            {
-                // Todo:Exception handling
-                throw;
-            }
+            return this.Created("/order/" + menuOrder.Id, order);
         }
 
         [Route("client/order/{menuOrderId}")]
         [HttpGet]
         public IHttpActionResult ShowOrder(long menuOrderId)
         {
-            try
+            // Todo: Exception handling
+            var menuOrder = orderServices.GetOrder(menuOrderId);
+            var menuOrderDto = new MenuOrderDto
             {
-                using (var context = new DeliciousDishesDbContext())
-                {
-                    var menuOrder = context.MenuOrders.Find(menuOrderId);
-                    var menuOrderDto = new MenuOrderDto
-                    {
-                        MenuOrderId = menuOrder.Id,
-                        OrderUserId = menuOrder.OrderUser,
-                        DailyOfferId = menuOrder.DailyOfferId,
-                        RecipientUserId = menuOrder.RecipientUser,
-                    };
-                    return this.Ok(menuOrderDto);
-                }
-            }
-            catch (Exception)
-            {
-                // Todo:Exception handling
-                throw;
-            }
+                MenuOrderId = menuOrder.Id,
+                OrderUserId = menuOrder.OrderUser,
+                DailyOfferId = menuOrder.DailyOfferId,
+                RecipientUserId = menuOrder.RecipientUser,
+            };
+            return this.Ok(menuOrderDto);
         }
 
         [Route("client/order")]
