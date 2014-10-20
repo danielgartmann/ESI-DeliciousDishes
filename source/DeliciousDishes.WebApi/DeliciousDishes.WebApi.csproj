@@ -96,6 +96,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Admin\DailyOfferController.cs" />
     <Compile Include="Models\Admin\DailyOfferDto.cs" />
     <Compile Include="Controllers\Client\DailyOfferApiController.cs" />
