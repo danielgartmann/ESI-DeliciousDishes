@@ -91,8 +91,26 @@ namespace DeliciousDishes.WebApi.Test
 
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             Assert.GreaterOrEqual(listOfOffers.Count(), 1);
-            Assert.IsTrue(listOfOffers.Any(o => o.DailyOfferId == testDailyOffer1.Id));
-            
+        }
+
+        [TestCase]
+        public void RequestDailyOffer_WithDate_ReturnsCorrectDailyOffer()
+        {
+            var url = string.Format(baseAddress + "client/dailyoffer?date={0:yyyy-MM-dd}", DateTime.UtcNow);
+
+            var response = httpClient.GetAsync(url).Result;
+            var content = response.Content.ReadAsStringAsync().Result;
+
+            var listOfOffers = JsonConvert.DeserializeObject<DailyOfferDto[]>(content);
+
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            var testDailyOffer = listOfOffers.SingleOrDefault(o => o.DailyOfferId == testDailyOffer1.Id);
+            Assert.IsNotNull(testDailyOffer);
+            Assert.AreEqual(testDailyOffer1.Menu.Description, testDailyOffer.Description);
+            Assert.AreEqual(testDailyOffer1.Menu.ImageUrl, testDailyOffer.ImageUrl);
+            Assert.AreEqual(testDailyOffer1.Stock, testDailyOffer.Stock);
+            Assert.AreEqual(testDailyOffer1.Menu.Title, testDailyOffer.Title);
+            Assert.AreEqual(testDailyOffer1.Menu.Price, testDailyOffer.Price);
         }
     }
 }
