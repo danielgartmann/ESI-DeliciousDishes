@@ -18,19 +18,13 @@ using NUnit.Framework;
 
 namespace DeliciousDishes.WebApi.Test
 {
-    public class OrderTest
+    public class DailyOfferApiTest
     {
         private readonly HttpClient httpClient;
         private readonly string baseAddress;
         private IDisposable webApp;
 
-        private const string MinimalisticOrderSample = @"
-            {
-                'DailyOfferId': 123,
-                'OrderUserId': 'mis'
-            }";
-
-        public OrderTest()
+        public DailyOfferApiTest()
         {
             this.baseAddress = "http://localhost:9000/";
 
@@ -48,10 +42,6 @@ namespace DeliciousDishes.WebApi.Test
         {
             using (var context = new DeliciousDishesDbContext())
             {
-                //context.MenuOrders.RemoveRange(context.MenuOrders);
-                //context.DailyOffers.RemoveRange(context.DailyOffers);
-                //context.Menus.RemoveRange(context.Menus);
-
                 testMenu1 = new Menu { Description = "Test menu", Price = 12.5, Title = "Pasta" };
                 context.Menus.Add(testMenu1);
                 testDailyOffer1 = new DailyOffer { Date = DateTime.Today, Menu = testMenu1, Stock = 12 };
@@ -70,14 +60,6 @@ namespace DeliciousDishes.WebApi.Test
                 context.SaveChanges();
             }
         } 
-
-        [TestCase]
-        public void SendAndOrder_WithAllFilledOut_ShouldReturnOk()
-        {
-            var response = httpClient.PostAsync(baseAddress + "client/order", new StringContent(MinimalisticOrderSample, Encoding.UTF8, "application/json")).Result;
-
-            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
-        }
 
         [TestCase]
         public void RequestDailyOffer_WithDate_ReturnsAList()

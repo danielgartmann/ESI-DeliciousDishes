@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
+using DeliciousDishes.DataAccess.Context;
+using DeliciousDishes.DataAccess.Entities;
 using DeliciousDishes.WebApi.Filter;
 using DeliciousDishes.WebApi.Models.Client;
 
@@ -14,11 +17,28 @@ namespace DeliciousDishes.WebApi.Controllers.Client
         [ValidateModelFilter]
         public IHttpActionResult NewOrder([FromBody] MenuOrderDto order)
         {
-            var theInsertedOrder = order;
-            var aInsertedId = new Random(DateTime.UtcNow.Millisecond).Next(0, 1000);
-            theInsertedOrder.MenuOrderId = aInsertedId;
+            try
+            {
+                using (var context = new DeliciousDishesDbContext())
+                {
+                    var menuOrder = new MenuOrder
+                    {
+                        OrderUser = order.OrderUserId,
+                        DailyOfferId = order.DailyOfferId,
+                        RecipientUser = order.RecipientUserId,
+                        Remarks = order.Remarks
+                    };
+                    context.MenuOrders.Add(menuOrder);
+                    context.SaveChanges();
 
-            return this.Created("/order/" + aInsertedId, theInsertedOrder);
+                    return this.Created("/order/" + menuOrder.Id, order);
+                }
+            }
+            catch (Exception)
+            {
+                // Todo:Exception handling
+                throw;
+            }
         }
 
         [Route("client/order/{menuOrderId}")]
