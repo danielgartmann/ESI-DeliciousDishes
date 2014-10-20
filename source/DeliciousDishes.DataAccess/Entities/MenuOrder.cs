@@ -1,10 +1,14 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DeliciousDishes.DataAccess.Entities
 {
     public class MenuOrder
     {
         public long Id { get; set; }
+
+        [ForeignKey("DailyOffer")]
+        public long DailyOfferId { get; set; }
 
         public DailyOffer DailyOffer { get; set; }
 

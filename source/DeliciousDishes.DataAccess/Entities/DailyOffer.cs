@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DeliciousDishes.DataAccess.Entities
 {
@@ -9,6 +10,9 @@ namespace DeliciousDishes.DataAccess.Entities
         public DateTime Date { get; set; }
 
         public long Stock { get; set; }
+
+        [ForeignKey("Menu")]
+        public long MenuId { get; set; }
 
         public Menu Menu { get; set; }
     }
