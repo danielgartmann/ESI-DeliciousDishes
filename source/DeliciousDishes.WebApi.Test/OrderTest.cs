@@ -40,18 +40,22 @@ namespace DeliciousDishes.WebApi.Test
             this.httpClient = new HttpClient();
         }
 
+        private Menu testMenu1;
+        private DailyOffer testDailyOffer1;
+
         [SetUp]
         public void BeforeTest()
         {
             using (var context = new DeliciousDishesDbContext())
             {
-                context.MenuOrders.RemoveRange(context.MenuOrders);
-                context.DailyOffers.RemoveRange(context.DailyOffers);
-                context.Menus.RemoveRange(context.Menus);
+                //context.MenuOrders.RemoveRange(context.MenuOrders);
+                //context.DailyOffers.RemoveRange(context.DailyOffers);
+                //context.Menus.RemoveRange(context.Menus);
 
-                var menu1 = new Menu { Description = "Best Pasta Ever", Price = 12.5, Title = "Pasta" };
-                context.Menus.Add(menu1);
-                context.DailyOffers.Add(new DailyOffer { Date = DateTime.Today, Menu = menu1, Stock = 12});
+                testMenu1 = new Menu { Description = "Test menu", Price = 12.5, Title = "Pasta" };
+                context.Menus.Add(testMenu1);
+                testDailyOffer1 = new DailyOffer { Date = DateTime.Today, Menu = testMenu1, Stock = 12 };
+                context.DailyOffers.Add(testDailyOffer1);
                 context.SaveChanges();
             }
         }
@@ -61,9 +65,9 @@ namespace DeliciousDishes.WebApi.Test
         {
             using (var context = new DeliciousDishesDbContext())
             {
-                context.MenuOrders.RemoveRange(context.MenuOrders);
-                context.DailyOffers.RemoveRange(context.DailyOffers);
-                context.Menus.RemoveRange(context.Menus);
+                context.DailyOffers.Remove(context.DailyOffers.Single(d => d.Id == testDailyOffer1.Id));
+                context.Menus.Remove(context.Menus.Single(d => d.Id == testMenu1.Id));
+                context.SaveChanges();
             }
         } 
 
@@ -87,6 +91,7 @@ namespace DeliciousDishes.WebApi.Test
 
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             Assert.GreaterOrEqual(listOfOffers.Count(), 1);
+            Assert.IsTrue(listOfOffers.Any(o => o.DailyOfferId == testDailyOffer1.Id));
             
         }
     }
