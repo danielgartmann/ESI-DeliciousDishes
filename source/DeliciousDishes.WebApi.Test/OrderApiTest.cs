@@ -5,7 +5,9 @@ using System.Net.Http;
 using System.Text;
 using DeliciousDishes.DataAccess.Context;
 using DeliciousDishes.DataAccess.Entities;
+using DeliciousDishes.WebApi.Models.Client;
 using Microsoft.Owin.Hosting;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 
@@ -25,6 +27,7 @@ namespace DeliciousDishes.WebApi.Test
 
         private Menu testMenu1;
         private DailyOffer testDailyOffer1;
+        private MenuOrder testOrder1;
 
         [SetUp]
         public void BeforeTest()
@@ -35,6 +38,8 @@ namespace DeliciousDishes.WebApi.Test
                 context.Menus.Add(testMenu1);
                 testDailyOffer1 = new DailyOffer { Date = DateTime.Today, Menu = testMenu1, Stock = 12 };
                 context.DailyOffers.Add(testDailyOffer1);
+                testOrder1 = new MenuOrder { DailyOffer = testDailyOffer1, OrderUser = "hun"};
+                context.MenuOrders.Add(testOrder1);
                 context.SaveChanges();
             }
         }
@@ -75,8 +80,22 @@ namespace DeliciousDishes.WebApi.Test
 
             using (var context = new DeliciousDishesDbContext())
             {
-                Assert.AreEqual(1, context.MenuOrders.Count(o => o.DailyOfferId == testDailyOffer1.Id));
+                Assert.AreEqual(2, context.MenuOrders.Count(o => o.DailyOfferId == testDailyOffer1.Id));
             }
+        }
+
+        [TestCase]
+        public void ShowOrder_ValidOrder_MustBeFetchedFromDatabase()
+        {
+            var url = string.Format(baseAddress + "client/order/{0}", testOrder1.Id);
+
+            var response = httpClient.GetAsync(url).Result;
+            var content = response.Content.ReadAsStringAsync().Result;
+
+            var menuOrder = JsonConvert.DeserializeObject<MenuOrderDto>(content);
+
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual(testOrder1.DailyOfferId, menuOrder.DailyOfferId);
         }
 
         private string CreateOrderSample()

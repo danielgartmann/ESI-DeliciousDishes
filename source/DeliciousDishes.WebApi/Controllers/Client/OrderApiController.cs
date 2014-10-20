@@ -45,15 +45,26 @@ namespace DeliciousDishes.WebApi.Controllers.Client
         [HttpGet]
         public IHttpActionResult ShowOrder(long menuOrderId)
         {
-            var theOrderFromDatabase = new MenuOrderDto
+            try
             {
-                MenuOrderId = menuOrderId,
-                OrderUserId = "you",
-                DailyOfferId = 1234,
-                RecipientUserId = "other"
-            };
-
-            return this.Ok(theOrderFromDatabase);
+                using (var context = new DeliciousDishesDbContext())
+                {
+                    var menuOrder = context.MenuOrders.Find(menuOrderId);
+                    var menuOrderDto = new MenuOrderDto
+                    {
+                        MenuOrderId = menuOrder.Id,
+                        OrderUserId = menuOrder.OrderUser,
+                        DailyOfferId = menuOrder.DailyOfferId,
+                        RecipientUserId = menuOrder.RecipientUser,
+                    };
+                    return this.Ok(menuOrderDto);
+                }
+            }
+            catch (Exception)
+            {
+                // Todo:Exception handling
+                throw;
+            }
         }
 
         [Route("client/order")]
