@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="DeliciousDishes.Azure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2013-10.2.2">
+  <Role name="DeliciousDishes.WebApi">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=deliciousdishes;AccountKey=coBcPIm0clmEGEajAJtwWhM0YPecxFbV8j1qEU5qC8y7rnZ5z2HHmDsXs1w6AdsuwoQO/57STOVzRBS5dN4V5g==" />
+    </ConfigurationSettings>
+  </Role>
+</ServiceConfiguration>
