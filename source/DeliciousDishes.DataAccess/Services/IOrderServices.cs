@@ -8,8 +8,8 @@ namespace DeliciousDishes.DataAccess.Services
     {
         MenuOrder GetOrder(long id);
         long CreateOrder(long dailyOfferId, string orderUserId, string recipientUserId, string remarks);
-        void CancelOrder(long id);
-        void UpdateOrder(long id, long dailyOfferId, string recipientUserId, string remarks);
+        bool CancelOrder(long id);
+        bool UpdateOrder(long id, long dailyOfferId, string recipientUserId, string remarks);
         IEnumerable<MenuOrder> GetOrders(string user, DateTime date);
     }
 }

@@ -19,6 +19,7 @@ namespace DeliciousDishes.WebApi.Controllers.Client
         [ValidateModelFilter]
         public IHttpActionResult NewOrder([FromBody] MenuOrderDto order)
         {
+            // Todo: Exception handling
             var newOrderId = orderServices.CreateOrder(order.DailyOfferId, order.OrderUserId, order.RecipientUserId, order.Remarks);
 
             return Created("/order/" + newOrderId, order);
@@ -30,6 +31,12 @@ namespace DeliciousDishes.WebApi.Controllers.Client
         {
             // Todo: Exception handling
             var menuOrder = orderServices.GetOrder(menuOrderId);
+
+            if (menuOrder == null)
+            {
+                return NotFound();
+            }
+
             var menuOrderDto = new MenuOrderDto
             {
                 MenuOrderId = menuOrder.Id,
@@ -46,20 +53,29 @@ namespace DeliciousDishes.WebApi.Controllers.Client
         [ValidateModelFilter]
         public IHttpActionResult UpdateOrder([FromBody] MenuOrderDto order)
         {
-            // Todo: Exception handling
-            orderServices.UpdateOrder(order.MenuOrderId, order.DailyOfferId, order.RecipientUserId, order.Remarks);
+            if (orderServices.UpdateOrder(order.MenuOrderId, order.DailyOfferId, order.RecipientUserId, order.Remarks))
+            {
+                return Ok(order);
+            }
+            else
+            {
+                return NotFound();
+            }
 
-            return Ok(order);
         }
 
         [Route("client/order")]
         [HttpDelete]
         public IHttpActionResult CancelOrder(long orderId)
         {
-            // Todo: Exception handling
-            orderServices.CancelOrder(orderId);
-
-            return Ok();
+            if (orderServices.CancelOrder(orderId))
+            {
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         [Route("client/order/")]
