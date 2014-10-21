@@ -81,14 +81,23 @@ namespace DeliciousDishes.DataAccess.Services
             }
         }
 
-        public void CreateOrder(MenuOrder menuOrder)
+        public long CreateOrder(long dailyOfferId, string orderUserId, string recipientUserId, string remarks)
         {
             try
             {
                 using (var context = new DeliciousDishesDbContext())
                 {
-                    context.MenuOrders.Add(menuOrder);
+                    var newOrder = new MenuOrder()
+                    {
+                        DailyOfferId = dailyOfferId,
+                        OrderUser = orderUserId,
+                        RecipientUser = recipientUserId,
+                        Remarks = remarks
+                    };
+
+                    context.MenuOrders.Add(newOrder);
                     context.SaveChanges();
+                    return newOrder.Id;
                 }
             }
             catch (Exception)

@@ -19,16 +19,9 @@ namespace DeliciousDishes.WebApi.Controllers.Client
         [ValidateModelFilter]
         public IHttpActionResult NewOrder([FromBody] MenuOrderDto order)
         {
-            var menuOrder = new MenuOrder
-            {
-                OrderUser = order.OrderUserId,
-                DailyOfferId = order.DailyOfferId,
-                RecipientUser = order.RecipientUserId,
-                Remarks = order.Remarks
-            };
-            orderServices.CreateOrder(menuOrder);
+            var newOrderId = orderServices.CreateOrder(order.DailyOfferId, order.OrderUserId, order.RecipientUserId, order.Remarks);
 
-            return Created("/order/" + menuOrder.Id, order);
+            return Created("/order/" + newOrderId, order);
         }
 
         [Route("client/order/{menuOrderId}")]
