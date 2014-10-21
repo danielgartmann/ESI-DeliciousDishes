@@ -6,7 +6,7 @@ using DeliciousDishes.DataAccess.Entities;
 
 namespace DeliciousDishes.DataAccess.Services
 {
-    public class DailyOfferServices
+    public class DailyOfferServices : IDailyOfferServices
     {
         public IEnumerable<DailyOffer> GetDailyOffers(DateTime date)
         {

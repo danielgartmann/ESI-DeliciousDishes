@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-using DeliciousDishes.DataAccess.Context;
 using DeliciousDishes.DataAccess.Entities;
 using DeliciousDishes.DataAccess.Services;
 using DeliciousDishes.WebApi.Filter;
@@ -12,7 +11,7 @@ namespace DeliciousDishes.WebApi.Controllers.Client
 {
     public class OrderApiController : ApiController
     {
-        private readonly OrderServices orderServices = new OrderServices();
+        private readonly IOrderServices orderServices = new OrderServices();
 
         [Route("client/order")]
         [HttpPost]
@@ -29,7 +28,7 @@ namespace DeliciousDishes.WebApi.Controllers.Client
             };
             orderServices.CreateOrder(menuOrder);
 
-            return this.Created("/order/" + menuOrder.Id, order);
+            return Created("/order/" + menuOrder.Id, order);
         }
 
         [Route("client/order/{menuOrderId}")]
@@ -45,7 +44,7 @@ namespace DeliciousDishes.WebApi.Controllers.Client
                 DailyOfferId = menuOrder.DailyOfferId,
                 RecipientUserId = menuOrder.RecipientUser,
             };
-            return this.Ok(menuOrderDto);
+            return Ok(menuOrderDto);
         }
 
         [Route("client/order")]
@@ -54,15 +53,20 @@ namespace DeliciousDishes.WebApi.Controllers.Client
         [ValidateModelFilter]
         public IHttpActionResult UpdateOrder([FromBody] MenuOrderDto order)
         {
-            return this.Ok(order);
+            // Todo: Exception handling
+            orderServices.UpdateOrder(order.MenuOrderId, order.DailyOfferId, order.RecipientUserId, order.Remarks);
+
+            return Ok(order);
         }
 
         [Route("client/order")]
         [HttpDelete]
         public IHttpActionResult CancelOrder(long orderId)
         {
-            // TODO: Cancel the Order
-            return this.Ok();
+            // Todo: Exception handling
+            orderServices.CancelOrder(orderId);
+
+            return Ok();
         }
 
         [Route("client/order/")]
@@ -71,27 +75,19 @@ namespace DeliciousDishes.WebApi.Controllers.Client
         {
             var orderUserId = user;
 
-            var random = new Random(DateTime.UtcNow.Millisecond);
-            
-            var orders = new List<MenuOrderDto>(new[]
+            // Todo: Exception handling
+            var orders = orderServices.GetOrders(user, date).Select(o => new MenuOrderDto
             {
-                new MenuOrderDto()
-                {
-                    DailyOfferId = 12345,
-                    MenuOrderId = random.Next(0, 1000),
-                    OrderUserId = orderUserId,
-                    RecipientUserId = "other",
-                }, 
-                new MenuOrderDto()
-                {
-                    DailyOfferId = 12345,
-                    MenuOrderId = random.Next(0, 1000),
-                    OrderUserId = orderUserId,
-                    RecipientUserId = orderUserId,
-                }, 
+                CancellationDateTime = o.CancellationDateTime,
+                DailyOfferId = o.DailyOfferId,
+                IsCancelled = o.IsCancelled,
+                MenuOrderId = o.Id,
+                OrderUserId = o.OrderUser,
+                RecipientUserId = o.RecipientUser,
+                Remarks = o.Remarks
             });
 
-            return this.Ok(orders);
+            return Ok(orders);
         }
     }
 }

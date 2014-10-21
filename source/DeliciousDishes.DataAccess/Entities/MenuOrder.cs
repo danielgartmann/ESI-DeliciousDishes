@@ -18,7 +18,7 @@ namespace DeliciousDishes.DataAccess.Entities
 
         public string Remarks { get; set; }
 
-        public bool? IsCancelled { get; set; }
+        public bool IsCancelled { get; set; }
 
         public DateTime? CancellationDateTime { get; set; }
 
