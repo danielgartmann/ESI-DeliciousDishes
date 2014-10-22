@@ -55,9 +55,9 @@ namespace DeliciousDishes.WebApi.Test
         {
             using (var context = new DeliciousDishesDbContext())
             {
-                context.DailyOffers.Remove(context.DailyOffers.Single(d => d.Id == testDailyOffer1.Id));
-                context.Menus.Remove(context.Menus.Single(d => d.Id == testMenu1.Id));
-                context.SaveChanges();
+                //context.DailyOffers.Remove(context.DailyOffers.Single(d => d.Id == testDailyOffer1.Id));
+                //context.Menus.Remove(context.Menus.Single(d => d.Id == testMenu1.Id));
+                //context.SaveChanges();
             }
         } 
 
